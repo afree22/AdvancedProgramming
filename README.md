@@ -1,2 +1,2 @@
-# AdvancedProgramming
-Repository for Advanced Programming Class
+# Programming
+Repository for Programming Projects
