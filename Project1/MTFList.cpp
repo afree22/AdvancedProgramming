@@ -8,14 +8,9 @@
 
 #include "MTFList.h"
 #include <iostream>
-using namespace std;
 
-Node::Node()
-{
-    next = NULL;
-    prev = NULL;
-}
-Node::Node(int d, Node *n = NULL, Node *p = NULL)
+//constructor with parameters for Node
+DLLNode::DLLNode(int d, DLLNode *n = NULL, DLLNode *p = NULL)
 {
     data = d;
     next = n;
@@ -24,75 +19,103 @@ Node::Node(int d, Node *n = NULL, Node *p = NULL)
 
 void MTFList::addToTail(int value)
 {
-    if(tail != 0)
+    //if list isn't empty
+    if(tail != NULL)
     {
-        tail = new Node(value, 0, tail);
+        tail = new DLLNode(value, NULL, tail);
         tail->prev->next = tail;
     }
+    
+    //list is empty
     else
     {
-        head = tail = new Node(value);
+        head = tail = new DLLNode(value);
     }
 }
 
 
-void MTFList::search(int value)
+bool MTFList::search(int value)
 {
-    Node *temp = head;
-    bool change = false;
+    DLLNode *temp = head;
+    bool found = false;
+    
     while(temp != NULL)
     {
         if(temp->data == value)
         {
+            found = true;
             if (temp->prev == NULL)
             {
-                //at beginning so nothing special
+                //at beginning so do not need to move it
             }
             else if(temp->next == NULL)
             {
-                /* Remove from end */
-                // temp is last node
+                // moving the last DLLNode to the front
                 
                 tail = temp->prev;
                 temp->prev->next = NULL;
-                change = true;
-            }
-            else
-            { /* Remove from middle */
-  
-                temp->prev->next = temp->next;
-                temp->next->prev = temp->prev;
-                change = true;
-            }
-            
-            if(change)
-            {
                 temp->next = head;
                 temp->prev = NULL;
                 head->prev = temp;
                 head = temp;
             }
-            temp = NULL;
+            else
+            {
+                // Move item from middle to front
+                temp->prev->next = temp->next;
+                temp->next->prev = temp->prev;
+                temp->next = head;
+                temp->prev = NULL;
+                head->prev = temp;
+                head = temp;
+            }
+            temp = NULL; // set pointer to DLLNode to NULL to exit loop
         }
+        
         else
         {
+            // only increment pointer if not found
             temp = temp->next;
         }
     }
+    return found;
 }
 
         
 
 void MTFList::display()
 {
-    Node *temp=new Node;
+    DLLNode *temp=new DLLNode;
     temp=head;
     while(temp!=NULL)
     {
-        cout<< temp->data <<"\t";
+        std::cout<< temp->data <<"\t";
         temp=temp->next;
     }
-    cout << endl;
+}
+
+
+
+
+
+MTFList::~MTFList()
+{
+    if(head == NULL)
+    {
+        //nothing b/c list is empty
+    }
+    
+    if(head == tail)
+    {
+        delete head;
+        head = tail = 0;
+    }
+    else
+    {
+        tail = tail->prev;
+        delete tail->next;
+        tail->next = 0;
+    }
 }
 
 

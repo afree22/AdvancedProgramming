@@ -10,32 +10,34 @@
 #define MTFLIST_H
 
 #include <stdio.h>
-//Nodes to be stored in MTFList
 
-struct Node
+
+//Nodes to be stored in MTFList
+struct DLLNode
 {
     int data;
-    Node* next;
-    Node* prev;
-    Node();
-    Node(int, Node*, Node*);
-//    void setNext(Node*ptr){next=ptr;}
-//    void setPrev(Node*pt){prev=pt;}
+    DLLNode *next;
+    DLLNode *prev;
+    DLLNode(){next = prev = NULL;}
+    DLLNode(int d, DLLNode *n, DLLNode *p);
 };
 
 
-
+// Linked list where items will move to front
+// is a doubly linked list
 class MTFList
 {
 private:
-    Node *head;
-    Node *tail;
+    // list keeps track of first and last DLLNode
+    DLLNode *head;
+    DLLNode *tail;
 public:
     MTFList(){head=tail=NULL;}
     void addToTail(int);
-    void search(int);
-//    void MoveToFront(Node*); unnecessary
+    bool search(int);
     void display();
+    ~MTFList();
 };
+
 
 #endif /* MTFLIST_H*/
