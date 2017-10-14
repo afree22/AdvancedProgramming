@@ -10,7 +10,7 @@
 #include <iostream>
 
 //constructor with parameters for Node
-DLLNode::DLLNode(int d, DLLNode *n = NULL, DLLNode *p = NULL)
+Node::Node(int d, Node *n = NULL, Node *p = NULL)
 {
     data = d;
     next = n;
@@ -22,24 +22,24 @@ void MTFList::addToTail(int value)
     //if list isn't empty
     if(tail != NULL)
     {
-        tail = new DLLNode(value, NULL, tail);
+        tail = new Node(value, NULL, tail);
         tail->prev->next = tail;
     }
     
     //list is empty
     else
     {
-        head = tail = new DLLNode(value);
+        head = tail = new Node(value);
     }
 }
 
 
 bool MTFList::search(int value)
 {
-    DLLNode *temp = head;
+    Node *temp = head;
     bool found = false;
     
-    while(temp != NULL)
+    while(temp != NULL && found == false)
     {
         if(temp->data == value)
         {
@@ -50,7 +50,7 @@ bool MTFList::search(int value)
             }
             else if(temp->next == NULL)
             {
-                // moving the last DLLNode to the front
+                // moving the last Node to the front
                 
                 tail = temp->prev;
                 temp->prev->next = NULL;
@@ -69,7 +69,7 @@ bool MTFList::search(int value)
                 head->prev = temp;
                 head = temp;
             }
-            temp = NULL; // set pointer to DLLNode to NULL to exit loop
+            temp = NULL; // set pointer to Node to NULL to exit loop
         }
         
         else
@@ -85,7 +85,7 @@ bool MTFList::search(int value)
 
 void MTFList::display()
 {
-    DLLNode *temp=new DLLNode;
+    Node *temp=new Node;
     temp=head;
     while(temp!=NULL)
     {

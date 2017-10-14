@@ -13,13 +13,13 @@
 
 
 //Nodes to be stored in MTFList
-struct DLLNode
+struct Node
 {
     int data;
-    DLLNode *next;
-    DLLNode *prev;
-    DLLNode(){next = prev = NULL;}
-    DLLNode(int d, DLLNode *n, DLLNode *p);
+    Node *next;
+    Node *prev;
+    Node(){next = prev = NULL;}
+    Node(int d, Node *n, Node *p);
 };
 
 
@@ -28,9 +28,9 @@ struct DLLNode
 class MTFList
 {
 private:
-    // list keeps track of first and last DLLNode
-    DLLNode *head;
-    DLLNode *tail;
+    // list keeps track of first and last Node
+    Node *head;
+    Node *tail;
 public:
     MTFList(){head=tail=NULL;}
     void addToTail(int);
